@@ -44,6 +44,7 @@ class TestController extends CI_Controller
 //	从1加到一亿
 	public function add(){
 		$sum = 0;
+//		获取毫秒
 		$time = microtime(true);
 		$begin = (int)($time * 1000);
 		for($i = 1 ; $i <= 100000000 ; $i++){
@@ -52,8 +53,31 @@ class TestController extends CI_Controller
 		$time = microtime(true);
 		$end = (int)($time * 1000);
 		echo $end - $begin ;
-//		$t1 = microtime(true);
-//		$t2 = microtime(true);
-//		echo (($t2-$t1)*1000);
+	}
+//	文件上传类
+	public function do_upload()
+	{
+//		首先现在项目目录下创建uploads目录
+
+		$config['upload_path']      = './uploads/';//文件上传路径
+		$config['allowed_types']    = 'gif|jpg|png';//允许类型
+		$config['max_size']     = 100; //上传最大值单位  kb
+		$config['max_width']        = 1024;//图片最大宽度  0为无限
+		$config['max_height']       = 768;//图片最大高度  0为无限制
+		$fileName = uniqid();
+		$config['file_name'] = $fileName ;//文件名
+		$this->load->library('upload', $config);
+		$fileExt = $this->upload->data('file_ext');
+		if ( ! $this->upload->do_upload('userfile'))
+		{
+			$error = array('error' => $this->upload->display_errors());
+		}
+		else
+		{
+			$data = array('upload_data' => $this->upload->data());
+//			echo "<pre>";print_r($data);echo "<pre>";
+			echo "http://127.0.0.1:8400/cl/uploads/".$this->upload->data('file_name');
+		}
+//		echo 'http://127.0.0.1:8400/cl/uploads/'.$fileName.$fileExt;
 	}
 }
