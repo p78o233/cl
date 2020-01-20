@@ -72,6 +72,48 @@ class TestController extends CI_Controller
 		}
 
 	}
+//	删除数据
+	public function deleteTest(){
+		$data =  file_get_contents('php://input', 'r');
+		$jsonObject = json_decode($data);
+		$id = $jsonObject->id;
+		$this->load->model('test_model');
+		$resultData = $this->test_model->deleteTest($id);
+		if($resultData){
+			$result['data'] = true;
+			$result['ret'] = true;
+			$result['code'] = 200;
+			$result['msg'] = '删除成功';
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}else{
+			$result['data'] = false;
+			$result['ret'] = false;
+			$result['code'] = 500;
+			$result['msg'] = '删除失败';
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}
+	}
+//	逻辑删除
+	public function loginDeleteTest(){
+		$data =  file_get_contents('php://input', 'r');
+		$jsonObject = json_decode($data);
+		$id = $jsonObject->id;
+		$this->load->model('test_model');
+		$resultData = $this->test_model->logicDeleteTest($id,12);
+		if($resultData){
+			$result['data'] = true;
+			$result['ret'] = true;
+			$result['code'] = 200;
+			$result['msg'] = '删除成功';
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}else{
+			$result['data'] = false;
+			$result['ret'] = false;
+			$result['code'] = 500;
+			$result['msg'] = '删除失败';
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}
+	}
 //	从1加到一亿
 	public function add(){
 		$sum = 0;
