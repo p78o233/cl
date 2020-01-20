@@ -20,17 +20,13 @@ class Test_model extends CI_Model
 //		return $query->row_array();
 	}
 
-	public function insertTest(){
-		$this->name = $_POST['name'];
-		$this->age = $_POST['age'];
-		$this->deleted_at = time();
-		$this->db->insert($this);
+	public function insertTest($testModel){
+		$this->db->insert('test', $testModel);
 	}
 
-	public function updateTest(){
-		$this->name = $_POST['name'];
-		$this->age = $_POST['age'];
-		$this->deleted_at = time();
-		$this->db->update($this);
+	public function updateTest($test){
+		$id = $test->id;
+		$bool = $this->db->update('test',$test,array('id' => $id));
+		return $bool;
 	}
 }

@@ -41,6 +41,37 @@ class TestController extends CI_Controller
 //		JSON_UNESCAPED_UNICODE  中文不转义
 		echo json_encode($result,JSON_UNESCAPED_UNICODE);
 	}
+//	新增数据
+	public function insertTest(){
+		$this->load->model('test_model');
+		$testModel = new Test_model();
+		$test =  file_get_contents('php://input', 'r');
+//		把前端json对象转成model对象
+		$testModel = json_decode($test);
+		$this->test_model->insertTest($testModel);
+	}
+//	更新数据
+	public function updateTest(){
+		$test =  file_get_contents('php://input', 'r');
+		$this->load->model('test_model');
+		$testModel = new Test_model();
+		$testModel = json_decode($test);
+		$resultData = $this->test_model->updateTest($testModel);
+		if($resultData){
+			$result['data'] = true;
+			$result['ret'] = true;
+			$result['code'] = 200;
+			$result['msg'] = '更新成功';
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}else{
+			$result['data'] = false;
+			$result['ret'] = false;
+			$result['code'] = 500;
+			$result['msg'] = '更新失败';
+			echo json_encode($result,JSON_UNESCAPED_UNICODE);
+		}
+
+	}
 //	从1加到一亿
 	public function add(){
 		$sum = 0;
@@ -54,7 +85,7 @@ class TestController extends CI_Controller
 		$end = (int)($time * 1000);
 		echo $end - $begin ;
 	}
-//	文件上传类
+//	单个文件上传类
 	public function do_upload()
 	{
 //		首先现在项目目录下创建uploads目录
@@ -68,6 +99,7 @@ class TestController extends CI_Controller
 		$config['file_name'] = $fileName ;//文件名
 		$this->load->library('upload', $config);
 		$fileExt = $this->upload->data('file_ext');
+//		user_file 文件名
 		if ( ! $this->upload->do_upload('userfile'))
 		{
 			$error = array('error' => $this->upload->display_errors());
@@ -76,8 +108,8 @@ class TestController extends CI_Controller
 		{
 			$data = array('upload_data' => $this->upload->data());
 //			echo "<pre>";print_r($data);echo "<pre>";
+//			返回上传路径
 			echo "http://127.0.0.1:8400/cl/uploads/".$this->upload->data('file_name');
 		}
-//		echo 'http://127.0.0.1:8400/cl/uploads/'.$fileName.$fileExt;
 	}
 }
