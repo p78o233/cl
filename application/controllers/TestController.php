@@ -118,9 +118,7 @@ class TestController extends CI_Controller
 		$data =  file_get_contents('php://input', 'r');
 		$jsonObject = json_decode($data);
 		$this->load->model('test_model');
-		$testList = array();
-		$testList = $jsonObject;
-		$resultData = $this->test_model->batchInsertTest($testList);
+		$resultData = $this->test_model->batchInsertTest($jsonObject);
 		echo $resultData;
 	}
 //	从1加到一亿
