@@ -44,4 +44,9 @@ class Test_model extends CI_Model
 //		echo $this->db->last_query();
 		return $bool;
 	}
+//	批量插入
+	public function batchInsertTest($data){
+		$bool = $this->db->insert_batch('test',$data);
+		return $bool;
+	}
 }

@@ -114,6 +114,15 @@ class TestController extends CI_Controller
 			echo json_encode($result,JSON_UNESCAPED_UNICODE);
 		}
 	}
+	public function batchTestInsert(){
+		$data =  file_get_contents('php://input', 'r');
+		$jsonObject = json_decode($data);
+		$this->load->model('test_model');
+		$testList = array();
+		$testList = $jsonObject;
+		$resultData = $this->test_model->batchInsertTest($testList);
+		echo $resultData;
+	}
 //	从1加到一亿
 	public function add(){
 		$sum = 0;
