@@ -203,7 +203,7 @@ class TestController extends CI_Controller
 		$config['file_name'] = $fileName;//文件名
 		$this->load->library('upload', $config);
 		$fileExt = $this->upload->data('file_ext');
-//		user_file 文件名
+//		userfile 文件名
 		if (!$this->upload->do_upload('userfile')) {
 			$error = array('error' => $this->upload->display_errors());
 		} else {
