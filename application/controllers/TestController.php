@@ -38,7 +38,16 @@ class TestController extends CI_Controller
 		echo $name;
 		echo $id;
 	}
-
+//	获取url？参数
+	public function getUrlParam(){
+		$name = $this->input->get('name');
+		$id = $this->input->get('id');
+		if($name==null){
+			echo 'a';
+		}
+		echo $name;
+		echo $id;
+	}
 //	数据库查询
 	public function getTest($id)
 	{
