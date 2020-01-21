@@ -21,6 +21,14 @@ class Test_model extends CI_Model
 //		返回一维数组
 //		return $query->row_array();
 	}
+//	多条件查询
+//	文档 数据库参考 查询构造器类
+	public function getTestWhere(){
+		$this->db->where('name','3');
+		$this->db->where('age','0');
+		$query = $this->db->select('*')->get('test');
+		return $query->result();
+	}
 //	新增
 	public function insertTest($testModel){
 		$this->db->insert('test', $testModel);
@@ -30,6 +38,11 @@ class Test_model extends CI_Model
 		$this->db->insert('test', $testModel);
 		$id = $this->db->insert_id('test');
 		return $id;
+	}
+	//	批量插入
+	public function batchInsertTest($data){
+		$bool = $this->db->insert_batch('test',$data);
+		return $bool;
 	}
 //	更新
 	public function updateTest($test){
@@ -49,11 +62,6 @@ class Test_model extends CI_Model
 		$bool = $this->db->update('test');
 //		查看执行的sql语句
 //		echo $this->db->last_query();
-		return $bool;
-	}
-//	批量插入
-	public function batchInsertTest($data){
-		$bool = $this->db->insert_batch('test',$data);
 		return $bool;
 	}
 }

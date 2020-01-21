@@ -152,19 +152,28 @@ class TestController extends CI_Controller
 		$testModel = json_decode($jsonObject);
 //		先插入父对象，返回主键id
 		$parentId = $this->test_model->insetTestReturnId($testModel);
-//		插入子对象
+//		子对象添加父对象id
 		foreach ($testModel->list as $value) {
 			$value->testId = $parentId;
-			$this->test_model->insertTest($value);
-
 		}
+//		批量插入
+		$this->test_model->batchInsertTest($testModel->list);
 		$result['data'] = true;
 		$result['ret'] = true;
 		$result['code'] = 200;
 		$result['msg'] = '插入成功';
 		echo json_encode($result, JSON_UNESCAPED_UNICODE);
 	}
-
+//	多条件查询
+	public function getTestWhere(){
+		$this->load->model('test_model');
+		$result['data'] = $this->test_model->getTestWhere();
+		$result['ret'] = true;
+		$result['code'] = 200;
+		$result['msg'] = '查询成功';
+//		JSON_UNESCAPED_UNICODE  中文不转义
+		echo json_encode($result, JSON_UNESCAPED_UNICODE);
+	}
 //	从1加到一亿
 	public function add()
 	{
