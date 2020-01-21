@@ -7,6 +7,7 @@ class Test_model extends CI_Model
 	private $name;
 	private $age;
 	private $deleted_at;
+	public $testId;
 
 //	查询
 	public function getTest($id){
@@ -23,6 +24,12 @@ class Test_model extends CI_Model
 //	新增
 	public function insertTest($testModel){
 		$this->db->insert('test', $testModel);
+	}
+//	新增返回主键id
+	public function insetTestReturnId($testModel){
+		$this->db->insert('test', $testModel);
+		$id = $this->db->insert_id('test');
+		return $id;
 	}
 //	更新
 	public function updateTest($test){
