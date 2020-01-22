@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2020-01-21 17:16:58
+Date: 2020-01-22 17:00:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -50,12 +50,14 @@ CREATE TABLE `edu_school` (
   `desc` text COMMENT '描述',
   `url` text COMMENT '官网',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of edu_school
 -- ----------------------------
 INSERT INTO `edu_school` VALUES ('1', '测试学校', '1', '2020-01-21 16:34:23', '1', '2020-01-21 16:34:27', '', '测试学校描述', 'http://www.baidu.com');
+INSERT INTO `edu_school` VALUES ('2', '测试学校2', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00', '', '测试学校2描述', 'www.baidu.com');
+INSERT INTO `edu_school` VALUES ('3', '测试学校2', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00', '', '测试学校2描述', 'www.baidu.com');
 
 -- ----------------------------
 -- Table structure for `edu_student`

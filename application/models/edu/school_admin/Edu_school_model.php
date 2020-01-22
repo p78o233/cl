@@ -40,4 +40,14 @@ class Edu_school_model extends CI_Model
 		$query = $this->db->get('edu_school', $start, $pageSize);
 		return $query->result();
 	}
+//	新增学校
+	public function insertSchool($school){
+		$this->db->insert('edu9_school', $school);
+	}
+//	修改学校
+	public function updateSchool($school){
+		$id = $school->id;
+		$bool = $this->db->update('edu_school',$school,array('id' => $id));
+		return $bool;
+	}
 }
