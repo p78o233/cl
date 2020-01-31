@@ -28,10 +28,11 @@ class EduSchoolController extends CI_Controller
 		$school = file_get_contents('php://input', 'r');
 		$eduSchoolModel = new Edu_school_model();
 		$eduSchoolModel = json_decode($school);
-		if(!$eduSchoolModel->id){
+		if(!isset($eduSchoolModel->id)){
 //			新增
-			$eduSchoolModel->createTime = time();
-			$eduSchoolModel->modifyTime = time();
+//			时间字段要这样搞
+			$eduSchoolModel->createTime = date("Y-m-d H:i:s");
+			$eduSchoolModel->modifyTime = date("Y-m-d H:i:s");
 			$resultData = $this->edu_school_model->insertSchool($eduSchoolModel);
 			if($resultData){
 				$result['data'] = true;
@@ -48,7 +49,7 @@ class EduSchoolController extends CI_Controller
 			}
 		}else{
 //			修改
-			$eduSchoolModel->modifyTime = time();
+			$eduSchoolModel->modifyTime = date("Y-m-d H:i:s");
 			$resultData = $this->edu_school_model->updateSchool($eduSchoolModel);
 			if($resultData){
 				$result['data'] = true;
@@ -64,6 +65,27 @@ class EduSchoolController extends CI_Controller
 				echo json_encode($result, JSON_UNESCAPED_UNICODE);
 			}
 		}
-		echo gettype($eduSchoolModel);
+	}
+
+//	删除学校
+	public function deleteSchool(){
+		$data = file_get_contents('php://input', 'r');
+		$jsonObject = json_decode($data);
+		$id = $jsonObject->id;
+		$this->load->model('edu/school_admin/edu_school_model');
+		$resultData = $this->edu_school_model->deleteSchool($id);
+		if($resultData){
+			$result['data'] = true;
+			$result['ret'] = true;
+			$result['code'] = 200;
+			$result['msg'] = '删除成功';
+			echo json_encode($result, JSON_UNESCAPED_UNICODE);
+		}else{
+			$result['data'] = false;
+			$result['ret'] = false;
+			$result['code'] = 200;
+			$result['msg'] = '删除失败';
+			echo json_encode($result, JSON_UNESCAPED_UNICODE);
+		}
 	}
 }
