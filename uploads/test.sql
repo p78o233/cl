@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 本机
-Source Server Version : 50717
-Source Host           : 127.0.0.1:3306
+Source Server Version : 50553
+Source Host           : localhost:3306
 Source Database       : test
 
 Target Server Type    : MYSQL
-Target Server Version : 50717
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-01-22 17:00:14
+Date: 2020-01-31 23:31:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,6 +36,69 @@ CREATE TABLE `edu_admin` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `edu_class`
+-- ----------------------------
+DROP TABLE IF EXISTS `edu_class`;
+CREATE TABLE `edu_class` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '班级管理表',
+  `year` int(11) DEFAULT NULL COMMENT '入学年份 如2020',
+  `name` varchar(50) DEFAULT NULL COMMENT '班级名称 如 一班',
+  `createTeacherId` int(11) DEFAULT NULL COMMENT '创建班级的老师id',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `modifyTeacherId` int(11) DEFAULT NULL COMMENT '修改班级的老师id',
+  `modifyTime` datetime DEFAULT NULL COMMENT '修改时间',
+  `isdel` bit(1) DEFAULT b'0' COMMENT '是否删除 0否 1 是',
+  `masterTeacherId` int(11) DEFAULT NULL COMMENT '班主任老师id',
+  `schoolId` int(11) DEFAULT NULL COMMENT '所属学校id',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of edu_class
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `edu_course`
+-- ----------------------------
+DROP TABLE IF EXISTS `edu_course`;
+CREATE TABLE `edu_course` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '课程管理表',
+  `courseName` varchar(50) DEFAULT NULL COMMENT '课程名称',
+  `schoolId` int(11) DEFAULT NULL COMMENT '学校id',
+  `createTeacherId` int(11) DEFAULT NULL COMMENT '创建教师id',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `modifyTeacherId` int(11) DEFAULT NULL COMMENT '修改教师id',
+  `modifyTime` datetime DEFAULT NULL COMMENT '修改时间',
+  `isdel` bit(1) DEFAULT b'0' COMMENT '是否删除 0正常1 删除',
+  `desc` text COMMENT '描述',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of edu_course
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `edu_course_teacher`
+-- ----------------------------
+DROP TABLE IF EXISTS `edu_course_teacher`;
+CREATE TABLE `edu_course_teacher` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '老师课程关联表',
+  `courseId` int(11) DEFAULT NULL COMMENT '课程id',
+  `teacherId` int(11) DEFAULT NULL COMMENT '任课老师id',
+  `createTeacherId` int(11) DEFAULT NULL COMMENT '创建老师id',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `modifyTeacherId` int(11) DEFAULT NULL COMMENT '修改老师id',
+  `modifyTime` datetime DEFAULT NULL COMMENT '修改时间',
+  `isdel` bit(1) DEFAULT b'0' COMMENT '是否删除0正常1删除',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of edu_course_teacher
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `edu_school`
 -- ----------------------------
 DROP TABLE IF EXISTS `edu_school`;
@@ -49,15 +112,29 @@ CREATE TABLE `edu_school` (
   `isdel` bit(1) DEFAULT b'0' COMMENT '0正常  1删除',
   `desc` text COMMENT '描述',
   `url` text COMMENT '官网',
+  `province` varchar(10) DEFAULT NULL COMMENT '省',
+  `city` varchar(50) DEFAULT NULL COMMENT '市',
+  `area` varchar(100) DEFAULT NULL COMMENT '区',
+  `address` text COMMENT '详细地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of edu_school
 -- ----------------------------
-INSERT INTO `edu_school` VALUES ('1', '测试学校', '1', '2020-01-21 16:34:23', '1', '2020-01-21 16:34:27', '', '测试学校描述', 'http://www.baidu.com');
-INSERT INTO `edu_school` VALUES ('2', '测试学校2', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00', '', '测试学校2描述', 'www.baidu.com');
-INSERT INTO `edu_school` VALUES ('3', '测试学校2', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00', '', '测试学校2描述', 'www.baidu.com');
+INSERT INTO `edu_school` VALUES ('1', '测试学校', '1', '2020-01-21 16:34:23', '1', '2020-01-21 16:34:27', '', '测试学校描述', 'http://www.baidu.com', null, null, null, null);
+INSERT INTO `edu_school` VALUES ('2', '测试学校2', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00', '', '测试学校2描述', 'www.baidu.com', null, null, null, null);
+INSERT INTO `edu_school` VALUES ('3', '测试学校2', '1', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00', '', '测试学校2描述', 'www.baidu.com', null, null, null, null);
+INSERT INTO `edu_school` VALUES ('4', '测试新增学校', null, '0000-00-00 00:00:00', null, '0000-00-00 00:00:00', '', null, null, null, null, null, null);
+INSERT INTO `edu_school` VALUES ('5', '测试新增学校', null, '0000-00-00 00:00:00', null, '0000-00-00 00:00:00', '', null, null, null, null, null, null);
+INSERT INTO `edu_school` VALUES ('6', '测试新增学校', null, '0000-00-00 00:00:00', null, '0000-00-00 00:00:00', '', null, null, null, null, null, null);
+INSERT INTO `edu_school` VALUES ('7', '测试新增学校', null, '0000-00-00 00:00:00', null, '0000-00-00 00:00:00', '', null, null, null, null, null, null);
+INSERT INTO `edu_school` VALUES ('8', '测试新增学校', null, '0000-00-00 00:00:00', null, '0000-00-00 00:00:00', '', null, null, null, null, null, null);
+INSERT INTO `edu_school` VALUES ('9', '测试新增学校', null, '0000-00-00 00:00:00', null, '0000-00-00 00:00:00', '', null, null, null, null, null, null);
+INSERT INTO `edu_school` VALUES ('10', '测试新增学校', null, '0000-00-00 00:00:00', null, '0000-00-00 00:00:00', '', null, null, null, null, null, null);
+INSERT INTO `edu_school` VALUES ('11', '测试新增学校', null, '0000-00-00 00:00:00', null, '0000-00-00 00:00:00', '', null, null, null, null, null, null);
+INSERT INTO `edu_school` VALUES ('12', '测试新增学校', null, '0000-00-00 00:00:00', null, '0000-00-00 00:00:00', '', null, null, null, null, null, null);
+INSERT INTO `edu_school` VALUES ('13', '测试新增学校更新', null, '2020-01-31 08:51:38', '1', '2020-01-31 22:19:00', '', null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `edu_student`
@@ -70,16 +147,16 @@ CREATE TABLE `edu_student` (
   `nickName` varchar(255) DEFAULT NULL COMMENT '昵称',
   `pwd` varchar(255) DEFAULT NULL COMMENT '密码',
   `bitrh` datetime DEFAULT NULL COMMENT '生日',
-  `enterYear` int(11) DEFAULT NULL COMMENT '入学年限',
-  `createTeacher` int(11) DEFAULT NULL,
+  `createTeacherId` int(11) DEFAULT NULL,
   `createTime` datetime DEFAULT NULL,
-  `modifyTeacher` int(11) DEFAULT NULL,
+  `modifyTeacherId` int(11) DEFAULT NULL,
   `modifyTime` datetime DEFAULT NULL,
   `isdel` bit(1) DEFAULT b'0' COMMENT '0 正常 1删除',
   `remark` text COMMENT '备注',
-  `parentIdf` int(11) DEFAULT NULL COMMENT '绑定的第一个家长id',
-  `parentIds` int(11) DEFAULT NULL COMMENT '绑定的第二个家长id',
-  `parentIdt` int(11) DEFAULT NULL COMMENT '绑定的第三个家长id',
+  `parentOpenIdf` varchar(50) DEFAULT NULL COMMENT '绑定的第一个家长id',
+  `parentOpenIds` varchar(50) DEFAULT NULL COMMENT '绑定的第二个家长id',
+  `parentOpenIdt` varchar(50) DEFAULT NULL COMMENT '绑定的第三个家长id',
+  `classId` int(11) DEFAULT NULL COMMENT '所属班级id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -97,17 +174,39 @@ CREATE TABLE `edu_teacher` (
   `schoolId` int(11) DEFAULT NULL COMMENT '学校id',
   `account` varchar(11) DEFAULT NULL COMMENT '账号',
   `pwd` varchar(36) DEFAULT NULL COMMENT '密码',
-  `createTeacherId` int(11) DEFAULT NULL,
-  `createTeacherTime` datetime DEFAULT NULL COMMENT '创建时间',
-  `modifyTeacherId` int(11) DEFAULT NULL,
-  `modifyTeacherTime` datetime DEFAULT NULL COMMENT '修改时间',
-  `isdel` bit(1) DEFAULT b'0',
-  `subject` varchar(255) DEFAULT NULL COMMENT '科目',
+  `duty` varchar(255) DEFAULT NULL COMMENT '职务',
+  `desc` text COMMENT '描述',
+  `createTeacherId` int(11) DEFAULT NULL COMMENT '创建老师id',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `modifyTeacherId` int(11) DEFAULT NULL COMMENT '修改老师id',
+  `modifyTime` datetime DEFAULT NULL COMMENT '修改时间',
+  `isdel` bit(1) DEFAULT b'0' COMMENT '是否删除0正常1删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of edu_teacher
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `edu_teacher_course_class`
+-- ----------------------------
+DROP TABLE IF EXISTS `edu_teacher_course_class`;
+CREATE TABLE `edu_teacher_course_class` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '班级课程老师关联表',
+  `createTeacherId` int(11) DEFAULT NULL COMMENT '创建老师id',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
+  `modifyTeacherId` int(11) DEFAULT NULL COMMENT '修改老师id',
+  `modifyTime` datetime DEFAULT NULL COMMENT '修改时间',
+  `isdel` bit(1) DEFAULT b'0' COMMENT '是否删除0正常1删除',
+  `classId` int(11) DEFAULT NULL COMMENT '班级id',
+  `courseId` int(11) DEFAULT NULL COMMENT '课程id',
+  `teacherId` int(11) DEFAULT NULL COMMENT '老师id',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of edu_teacher_course_class
 -- ----------------------------
 
 -- ----------------------------

@@ -69,10 +69,23 @@ class Edu_school_model extends CI_Model
 		return $bool;
 	}
 //	删除学校
-	public function deleteSchool($id){
+	public function deleteSchool($id,$delAdmin,$delTime){
+		$this->db->trans_start();
 		$this->db->set('isdel', 1);
+		$this->db->set('modifyAdmin', $delAdmin);
+		$this->db->set('modifyTime', $delTime);
 		$this->db->where("id",$id);
 		$bool = $this->db->update('edu_school');
+//		删除学校老师
+		$this->load->model('edu/school_admin/edu_teacher_model');
+		$resultTeacher = $this->edu_teacher_model->deleteTeacherBySchoolId($id,$delTime);
+//		删除学校班级
+		$this->load->model('edu/school_admin/edu_class_model');
+		$resultClass = $this->edu_class_model->deleteClassBySchoolId($id,$delTime);
+//		删除学校学生
+		$this->load->model('edu/school_admin/edu_student_model');
+		$resultStundent = $this->edu_student_model->deleteStudentBySchoolId($id,$delTime);
+		$this->db->trans_complete();
 		return $bool;
 	}
 }

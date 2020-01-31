@@ -72,9 +72,11 @@ class EduSchoolController extends CI_Controller
 		$data = file_get_contents('php://input', 'r');
 		$jsonObject = json_decode($data);
 		$id = $jsonObject->id;
+		$delAdmin =  $jsonObject->modifyAdmin;
+		$delTime =  date("Y-m-d H:i:s");
 		$this->load->model('edu/school_admin/edu_school_model');
-		$resultData = $this->edu_school_model->deleteSchool($id);
-		if($resultData){
+		$resultSchool = $this->edu_school_model->deleteSchool($id,$delAdmin,$delTime);
+		if($resultSchool){
 			$result['data'] = true;
 			$result['ret'] = true;
 			$result['code'] = 200;
