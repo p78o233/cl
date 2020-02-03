@@ -29,6 +29,11 @@ class Edu_school_model extends CI_Model
 	private $area;
 //	详细地址
 	private $address;
+//	绑定公众号appId
+	private $appId;
+//	绑定公众号appSecret
+	private $appSecret;
+
 //	获取学校总数
 	public function getSchoolCount($name)
 	{
@@ -47,7 +52,7 @@ class Edu_school_model extends CI_Model
 			$this->db->like('name', $name);
 		}
 		$this->db->order_by('name', 'DESC');
-		$query = $this->db->get('edu_school', $start, $pageSize);
+		$query = $this->db->limit($pageSize,$start)->get('edu_school');
 		return $query->result();
 	}
 

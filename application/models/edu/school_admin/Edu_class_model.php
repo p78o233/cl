@@ -32,4 +32,32 @@ class Edu_class_model extends CI_Model
 		$bool = $this->db->update('edu_class');
 		return $bool;
 	}
+
+//	根据学校id，入学年份，班级名称获取学校班级
+	public function getEduClassCount($schoolId,$name,$year){
+		$this->db->where('isdel', 0);
+		$this->db->where('schoolId', $schoolId);
+		if ($name != null) {
+			$this->db->like('name', $name);
+		}
+		if($year != null){
+			$this->db->where('year', $year);
+		}
+		$count = $this->db->count_all('edu_class');
+		return $count;
+	}
+	public function getEduClassPage($schoolId,$name,$year,$start,$pageSize)
+	{
+		$this->db->where('isdel', 0);
+		$this->db->where('schoolId', $schoolId);
+		if ($name != null) {
+			$this->db->like('name', $name);
+		}
+		if($year != null){
+			$this->db->where('year', $year);
+		}
+		$this->db->order_by('id', 'DESC');
+		$query = $this->db->limit($pageSize,$start)->get('edu_class');
+		return $query->result();
+	}
 }
