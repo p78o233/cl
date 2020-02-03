@@ -70,6 +70,7 @@ class Edu_school_model extends CI_Model
 	}
 //	删除学校
 	public function deleteSchool($id,$delAdmin,$delTime){
+//		开启事务
 		$this->db->trans_start();
 		$this->db->set('isdel', 1);
 		$this->db->set('modifyAdmin', $delAdmin);
@@ -85,6 +86,16 @@ class Edu_school_model extends CI_Model
 //		删除学校学生
 		$this->load->model('edu/school_admin/edu_student_model');
 		$resultStundent = $this->edu_student_model->deleteStudentBySchoolId($id,$delTime);
+//		删除课程
+		$this->load->model('edu/school_admin/edu_course_model');
+		$resultCourse = $this->edu_course_model->deleteCourseBySchoolId($id,$delTime);
+//		删除老师课程关联表
+		$this->load->model('edu/school_admin/edu_course_teacher_model');
+		$resultCourseTeacher = $this->edu_course_teacher_model->deleteCourseTeacherBySchoolId($id,$delTime);
+//		删除老师课程班级关联表
+		$this->load->model('edu/school_admin/edu_teacher_course_class_model');
+		$resultTeacherCourseClass = $this->edu_teacher_course_class_model->deleteTeacherCourseClassBySchoolId($id,$delTime);
+//		事务结束
 		$this->db->trans_complete();
 		return $bool;
 	}
