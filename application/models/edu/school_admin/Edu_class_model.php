@@ -60,4 +60,34 @@ class Edu_class_model extends CI_Model
 		$query = $this->db->limit($pageSize,$start)->get('edu_class');
 		return $query->result();
 	}
+//	新增班级
+	public function insertClass($eduClass){
+		$bool = $this->db->insert('edu_class', $eduClass);
+//		输出刚刚执行的sql语句
+//		echo $this->db->last_query();
+		return $bool;
+	}
+//	修改班级
+	public function editClass($eduClass){
+		$id = $eduClass->id;
+		$bool = $this->db->update('edu_class', $eduClass, array('id' => $id));
+//		echo $this->db->last_query();
+		return $bool;
+	}
+//	删除班级
+	public function deleteClass($id,$deleteTeacherId,$deleeteTime){
+//		事务开始
+		$this->db->trans_start();
+		$this->db->set('isdel', 1);
+		$this->db->set('modifyTeacherId', $deleteTeacherId);
+		$this->db->set('modifyTime', $deleeteTime);
+		$this->db->where("id",$id);
+		$bool = $this->db->update('edu_class');
+//		根据班级id删除学生
+		$this->load->model('edu/school_admin/edu_student_model');
+		$resultStundent = $this->edu_student_model->deleteStudentByClassId($id,$deleteTeacherId,$deleeteTime);
+//		事务结束
+		$this->db->trans_complete();
+		return $bool;
+	}
 }

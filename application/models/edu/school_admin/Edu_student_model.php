@@ -44,4 +44,15 @@ class Edu_student_model extends CI_Model
 		$bool = $this->db->update('edu_class');
 		return $bool;
 	}
+
+//	根据班级id删除学生
+	public function deleteStudentByClassId($classId,$deleteTeacherId,$deleteTime){
+		$this->db->set('isdel', 1);
+		$this->db->set('modifyTime', $deleteTime);
+		$this->db->set('modifyTeacherId',$deleteTeacherId);
+		$this->db->where("classId",$classId);
+		$bool = $this->db->update('edu_student');
+		return $bool;
+	}
+
 }
