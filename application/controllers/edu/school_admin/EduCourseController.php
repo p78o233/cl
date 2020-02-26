@@ -1,7 +1,7 @@
 <?php
 
 
-class Edu_course_controller extends CI_Controller
+class EduCourseController extends CI_Controller
 {
 //	获取课程列表
 	public function getEduCourse(){
