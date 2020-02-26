@@ -51,7 +51,7 @@ class Edu_school_model extends CI_Model
 		if ($name != null) {
 			$this->db->like('name', $name);
 		}
-		$this->db->order_by('name', 'DESC');
+		$this->db->order_by('id', 'DESC');
 		$query = $this->db->limit($pageSize,$start)->get('edu_school');
 		return $query->result();
 	}
